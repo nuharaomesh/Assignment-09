@@ -3,8 +3,146 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" href="assets/stylesheets/normalize.css">
+    <style>
+
+        section {
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            background-color: black;
+
+            background-image: url("assets/image/KITT-DOMUS-SUPERCAR-2.jpg.foto.rbig.jpg");
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        #box-set {
+            height: 40px;
+            width: 350px;
+            display: flex;
+
+            position: absolute;
+            top: 110px;
+            right: 0;
+            bottom: 0;
+            left: -6px;
+            margin: auto;
+            background-color: black;
+        }
+
+        button {
+            width: 70px;
+            aspect-ratio: 1/1;
+            border: 0;
+            border-radius: 100%;
+            background-color: #0ace0a;
+            border: 2px solid white;
+
+            font-family: sans-serif, Inter;
+            font-weight: bolder;
+            color: white;
+
+            position: relative;
+            top: 200px;
+            left: 1630px;
+        }
+
+        button:hover {
+            margin-top: -2px;
+            transition-duration: 0.2s;
+
+        }
+
+        section>div>div {
+            width: 44px;
+            height: 40px;
+        }
+
+        .lightOn1 {
+            background-color: #FF0000FF;
+        }
+
+        .lightOn2 {
+            background-color: #FF000094;
+        }
+
+        .lightOn3 {
+            background-color: #FF00005F;
+        }
+
+    </style>
 </head>
 <body>
+    <section>
+        <div id="box-set">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
 
+        <button id="btn1">Start</button>
+    </section>
+    <audio src="assets/audio/audio.mp3" id="audio"></audio>
+<script src="assets/lib/jquery.js"></script>
+<script>
+
+    let current_light_index = 0;
+    let max_index = 8;
+
+    let move = "RIGHT"
+    let lightFunc = null;
+
+    function clrChange() {
+        $("#box-set> div").removeClass("lightOn1");
+        $("#box-set> div").removeClass("lightOn2");
+        $("#box-set> div").removeClass("lightOn3");
+        $("#box-set> div").eq(current_light_index).addClass("lightOn1");
+
+        if (move === "RIGHT") {
+            if (current_light_index != 0) {
+                $("#box-set> div").eq(current_light_index - 1).addClass("lightOn2");
+            }
+
+            if (current_light_index > 1) {
+                $("#box-set> div").eq(current_light_index - 2).addClass("lightOn3");
+            }
+
+            ++current_light_index;
+            if (current_light_index>max_index - 2) {
+                move = "LEFT";
+            }
+        } else {
+            $("#box-set> div").eq(current_light_index + 1).addClass("lightOn2");
+            $("#box-set> div").eq(current_light_index + 2).addClass("lightOn3");
+            --current_light_index;
+            if (current_light_index===0) {
+                move = "RIGHT"
+            }
+        }
+    }
+
+    let btn = $("#btn1");
+
+    btn.on('click', () => {
+        if (btn.text() === "Start") {
+            lightFunc = setInterval(clrChange, 80);
+            btn.text("Stop");
+            btn.css({backgroundColor: "red"});
+            $("#audio")[0].play();
+        } else {
+            btn.text("Start");
+            btn.css({backgroundColor: "#0ace0a"});
+            clearInterval(lightFunc);
+            $("#audio")[0].pause();
+        }
+    });
+
+</script>
 </body>
 </html>
