@@ -5,18 +5,21 @@ let move = "RIGHT"
 let lightFunc = null;
 
 function clrChange() {
-    $("#box-set> div").removeClass("lightOn1");
-    $("#box-set> div").removeClass("lightOn2");
-    $("#box-set> div").removeClass("lightOn3");
-    $("#box-set> div").eq(current_light_index).addClass("lightOn1");
+
+    let box = $("#box-set>div");
+
+    box.removeClass("lightOn1");
+    box.removeClass("lightOn2");
+    box.removeClass("lightOn3");
+    box.eq(current_light_index).addClass("lightOn1");
 
     if (move === "RIGHT") {
         if (current_light_index != 0) {
-            $("#box-set> div").eq(current_light_index - 1).addClass("lightOn2");
+            box.eq(current_light_index - 1).addClass("lightOn2");
         }
 
         if (current_light_index > 1) {
-            $("#box-set> div").eq(current_light_index - 2).addClass("lightOn3");
+            box.eq(current_light_index - 2).addClass("lightOn3");
         }
 
         ++current_light_index;
@@ -24,8 +27,8 @@ function clrChange() {
             move = "LEFT";
         }
     } else {
-        $("#box-set> div").eq(current_light_index + 1).addClass("lightOn2");
-        $("#box-set> div").eq(current_light_index + 2).addClass("lightOn3");
+        box.eq(current_light_index + 1).addClass("lightOn2");
+        box.eq(current_light_index + 2).addClass("lightOn3");
         --current_light_index;
         if (current_light_index===0) {
             move = "RIGHT"
